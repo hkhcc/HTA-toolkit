@@ -12,11 +12,11 @@ from UnifiedQA import preprocess_input, run_model
 
 sign_grading_question = '''
 What type of study is this? \n
-1 Meta-analyses, systematic reviews of randomized controlled trials (RCTs), or RCTs
-2 Systematic review of case control or cohort studies; case control or cohort studies
-3 Case report or case series
-4 Expert opinion
-5 Cannot be determined
+(A) Grade 1 Meta-analyses, systematic reviews of randomized controlled trials (RCTs), or RCTs
+(B) Grade 2 Systematic review of case control or cohort studies; case control or cohort studies
+(C) Grade 3 Case report or case series
+(D) Grade 4 Expert opinion
+(E) Cannot be determined
 '''
 
 
