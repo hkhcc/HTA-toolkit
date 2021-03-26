@@ -25,6 +25,8 @@ abstracts = load_abstract(pmid_list, separate_title=False)
 
 for abstract in abstracts:
     print(abstract, file=sys.stderr)
+    pred = run_model('What is this study about?' + '\\n' + preprocess_input(abstract[1]))
+    print('Summary:', pred, file=sys.stderr)
     pred = run_model(preprocess_input(sign_grading_question) + '\\n' + preprocess_input(abstract[1]))
     print('Prediction:', pred, file=sys.stderr)
 
