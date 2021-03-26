@@ -7,7 +7,7 @@ Created on Fri Mar 26 14:56:13 2021
 
 import sys
 
-import panda as pd
+import pandas as pd
 
 from ncbi_search import load_abstract
 from UnifiedQA import preprocess_input, run_model
