@@ -11,9 +11,9 @@ from ncbi_search import load_abstract
 from UnifiedQA import preprocess_input, run_model
 
 sign_grading_question = '''
-What type of study is this? \n
-(A) Meta-analyses, systematic reviews of randomized controlled trials (RCTs), or RCTs
-(B) Systematic review of case control or cohort studies; case control or cohort studies
+This paper is a _ \n
+(A) Meta-analysis, systematic review of randomized controlled trials (RCTs), or randomized controlled trial
+(B) Systematic review of case control or cohort studies; case control or cohort study
 (C) Case report or case series
 (D) Expert opinion
 (E) Cannot be determined
