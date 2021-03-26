@@ -15,21 +15,6 @@ from UnifiedQA import preprocess_input, run_model
 pmid_list = ['29744625', '30675655']
 abstracts = load_abstract(pmid_list, separate_title=False)
 
-study_type = """
-What type of study is this? \n 
-(A) Meta-analysis 
-(B) Systematic review of randomized controlled trials 
-(C) Single randomized controlled trial
-(D) Prospective cohort 
-(E) Retrospective cohort 
-(F) Case-control study 
-(G) Case series 
-(H) Case report  
-(I) In vitro experiment 
-(J) Consensus recommendations
-(K) Cannot be determined
-"""
-
 for abstract in abstracts:
     abstract[1] = preprocess_input(abstract[1])
     print(abstract, file=sys.stderr)
