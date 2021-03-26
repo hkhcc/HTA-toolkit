@@ -25,7 +25,7 @@ abstracts = load_abstract(pmid_list, separate_title=False)
 
 for abstract in abstracts:
     print(abstract, file=sys.stderr)
-    pred = run_model(sign_grading_question + '\\n' + abstract[1])
+    pred = run_model(preprocess_inpit(sign_grading_question) + '\\n' + preprocess_input(abstract[1]))
     print('Prediction:', pred, file=sys.stderr)
 
 
