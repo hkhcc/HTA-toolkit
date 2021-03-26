@@ -13,25 +13,31 @@ from UnifiedQA import preprocess_input, run_model
 pmid_list = ['29744625', '30675655']
 abstracts = load_abstract(pmid_list, separate_title=False)
 
-sign_study_type = """
-What type of study is this? \\n
-(A) Meta-analysis
-(B) Systematic review of randomized controlled trials
-(C) Randomizec controlled trial
-(D) Systematic review of case control / cohort studies
-(E) A cohort study
-(F) A case-control study
-(G) A case series
-(H) A case report
+study_type = """
+What type of study is this? \n 
+(A) Meta-analysis 
+(B) Systematic review of randomized controlled trials 
+(C) Single randomized controlled trial
+(D) Prospective cohort 
+(E) Retrospective cohort 
+(F) Case-control study 
+(G) Case series 
+(H) Case report  
+(I) In vitro experiment 
+(J) Consensus recommendations
+(K) Cannot be determined
 """
 
 for abstract in abstracts:
     abstract[1] = preprocess_input(abstract[1])
     print(abstract, file=sys.stderr)
-    pred = run_model('What is this study about?' + '\\n' + abstract[1])
-    print('Summary:', pred, file=sys.stderr)
-    pred = run_model(sign_study_type + '\\n' + abstract[1])
-    print('Inferred study type:', pred, file=sys.stderr)
+    questions = pd.read_excel('Questions_set1.xlsx', sheet_name='questions')
+    for question_index, question_row in questions.iterrows():
+        this_question = preprocess_input(question_row['#Question'])
+        print(question_row['#Question'], ':', file=sys.stderr, end='')
+        this_answer = run_model(this_question + ' \\n ' + abstract[1])
+        print(this_answer, file=sys.stderr)
+    
 
 
 
