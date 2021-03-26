@@ -20,8 +20,10 @@ for abstract in abstracts:
     print('Summary:', pred, file=sys.stderr)
     pred = run_model('Is this a meta-analysis or systematic review or randomized controlled trial?' + '\\n' + abstract[1])
     print('Grade 1:', pred, file=sys.stderr)
-    pred = run_model('Is this a case-control or cohort study?' + '\\n' + abstract[1])
-    print('Grade 2:', pred, file=sys.stderr)
+    pred = run_model('Is this a case-control study?' + '\\n' + abstract[1])
+    print('Grade 2 (case-control):', pred, file=sys.stderr)
+    pred = run_model('Is this a cohort study?' + '\\n' + abstract[1])
+    print('Grade 2 (cohort):', pred, file=sys.stderr)
     pred = run_model('Is this a case series or case report?' + '\\n' + abstract[1])
     print('Grade 3:', pred, file=sys.stderr)
 
