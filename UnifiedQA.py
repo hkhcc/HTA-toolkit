@@ -23,13 +23,14 @@ def run_model(input_string, **generator_args):
     res = model.generate(input_ids, **generator_args)
     return tokenizer.batch_decode(res, skip_special_tokens=True)
 
+# Load the model
+print('# Now loading the AI model...', file=sys.stderr)
+model_name = "allenai/unifiedqa-t5-large" # you can specify the model size here
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = T5ForConditionalGeneration.from_pretrained(model_name)
+
+
 if __name__ == "__main__":
-    # Load the model
-    print('# Now loading the AI model...', file=sys.stderr)
-    model_name = "allenai/unifiedqa-t5-large" # you can specify the model size here
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = T5ForConditionalGeneration.from_pretrained(model_name)
-    
     # Now processing the articles
     print('# Now processing the journal article data...', file=sys.stderr)
     
