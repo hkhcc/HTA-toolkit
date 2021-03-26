@@ -13,19 +13,26 @@ from UnifiedQA import preprocess_input, run_model
 pmid_list = ['29744625', '30675655']
 abstracts = load_abstract(pmid_list, separate_title=False)
 
+sign_study_type = """
+What type of study is this? \\n
+(A) Meta-analysis
+(B) Systematic review of randomized controlled trials
+(C) Randomizec controlled trial
+(D) Systematic review of case control / cohort studies
+(E) A cohort study
+(F) A case-control study
+(G) A case series
+(H) A case report
+"""
+
 for abstract in abstracts:
     abstract[1] = preprocess_input(abstract[1])
     print(abstract, file=sys.stderr)
     pred = run_model('What is this study about?' + '\\n' + abstract[1])
     print('Summary:', pred, file=sys.stderr)
-    pred = run_model('Is this a meta-analysis or systematic review or randomized controlled trial?' + '\\n' + abstract[1])
-    print('Grade 1:', pred, file=sys.stderr)
-    pred = run_model('Is this a case-control study?' + '\\n' + abstract[1])
-    print('Grade 2 (case-control):', pred, file=sys.stderr)
-    pred = run_model('Is this a cohort study?' + '\\n' + abstract[1])
-    print('Grade 2 (cohort):', pred, file=sys.stderr)
-    pred = run_model('Is this a case series or case report?' + '\\n' + abstract[1])
-    print('Grade 3:', pred, file=sys.stderr)
+    pred = run_model(sign_study_type + '\\n' + abstract[1])
+    print('Inferred study type:', pred, file=sys.stderr)
+
 
 
 
