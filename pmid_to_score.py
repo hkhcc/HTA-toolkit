@@ -12,10 +12,10 @@ from UnifiedQA import preprocess_input, run_model
 
 sign_grading_question = '''
 What type of study is this? \n
-(A) Grade 1 Meta-analyses, systematic reviews of randomized controlled trials (RCTs), or RCTs
-(B) Grade 2 Systematic review of case control or cohort studies; case control or cohort studies
-(C) Grade 3 Case report or case series
-(D) Grade 4 Expert opinion
+(A) Meta-analyses, systematic reviews of randomized controlled trials (RCTs), or RCTs
+(B) Systematic review of case control or cohort studies; case control or cohort studies
+(C) Case report or case series
+(D) Expert opinion
 (E) Cannot be determined
 '''
 
@@ -25,7 +25,7 @@ abstracts = load_abstract(pmid_list, separate_title=False)
 
 for abstract in abstracts:
     print(abstract, file=sys.stderr)
-    pred = run_model(preprocess_inpit(sign_grading_question) + '\\n' + preprocess_input(abstract[1]))
+    pred = run_model(preprocess_input(sign_grading_question) + '\\n' + preprocess_input(abstract[1]))
     print('Prediction:', pred, file=sys.stderr)
 
 
