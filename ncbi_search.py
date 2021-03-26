@@ -133,6 +133,7 @@ def load_abstract(pmid_list, separate_title=True):
             pmid = pubmed_data[0].findall('PMID')
             assert len(pmid) == 1
             extracted_pmid = pmid[0].text
+            print('extracted_pmid', extracted_pmid, file=sys.stderr)
             cache_file_path = os.path.join(os.path.abspath(os.path.curdir), CACHE_DIR, str(extracted_pmid) + '.txt')
             article = pubmed_data[0].findall('Article')
             assert len(article) == 1
@@ -156,13 +157,14 @@ def load_abstract(pmid_list, separate_title=True):
                         content += paragraph.text + '\n'
             if len(abstract) == 0:
                 content += '[No abstract available.]'
-                # add the newl downloaded abstract to JSON_DB
-            assert extracted_pmid not in JSON_DB
+            # add the newl downloaded abstract to JSON_DB
+            print('# Adding', extracted_pmid, content, file=sys.stderr)
             JSON_DB[extracted_pmid] = content
     # read the newly downloaded abstracts
     newly_downloaded_abstracts = dict()
     for pmid in require_remote_fetch:
-        print(pmid, file=sys.stderr)
+        print('# Newly downloaded', pmid, file=sys.stderr)
+        print(JSON_DB.keys(), file=sys.stderr)
         if pmid in JSON_DB:
             newly_downloaded_abstracts[pmid] = JSON_DB[pmid]
         else:

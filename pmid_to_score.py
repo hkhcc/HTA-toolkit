@@ -12,19 +12,32 @@ import pandas as pd
 from ncbi_search import load_abstract
 from UnifiedQA import preprocess_input, run_model
 
-pmid_list = ['29744625', '30675655']
-abstracts = load_abstract(pmid_list, separate_title=False)
 
-for abstract in abstracts:
-    abstract[1] = preprocess_input(abstract[1])
-    print(abstract, file=sys.stderr)
-    questions = pd.read_excel('Questions_set1.xlsx', sheet_name='questions')
-    for question_index, question_row in questions.iterrows():
-        this_question = preprocess_input(question_row['#Question'])
-        print(question_row['#Question'], ':', file=sys.stderr, end='')
-        this_answer = run_model(this_question + ' \\n ' + abstract[1])
-        print(this_answer, file=sys.stderr)
+
+jo_input = pd.read_excel('PMID-Input.xlsx', sheet_name='jo_data')
+
+# prepare the question list and output list
+jo_output = jo_input.copy()
+question_list = list()
+questions = pd.read_excel('Questions_set1.xlsx', sheet_name='questions')
+for question_index, question_row in questions.iterrows():
+    question_list.append(question_row['#Question'])
+    jo_output['Question ' + str(question_index + 1) + ": " + question_row['#Question'].split('\\n')[0].rstrip()] = ""
+
+print(jo_output, file=sys.stderr)
+
+for article_index, article_row in jo_input.iterrows():
+    pubmed_data = load_abstract([str(article_row['PMID']), ])
+    title_and_abstract = pubmed_data[0][1] + pubmed_data[0][2]
     
+    for question_index, question in enumerate(question_list):
+        print(question, ':', file=sys.stderr, end='')
+        this_answer = run_model(question + ' \\n ' + title_and_abstract)
+        print(this_answer, file=sys.stderr)        
+        jo_output.at[article_index, 'Question ' + str(question_index + 1) + ": " + question.split('\\n')[0].rstrip()] = this_answer[0]
+
+# output the Excel file
+jo_output.to_excel('PMID-Output.xlsx', sheet_name='jo_analysis')
 
 
 

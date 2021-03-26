@@ -25,7 +25,7 @@ def run_model(input_string, **generator_args):
 
 # Load the model
 print('# Now loading the AI model...', file=sys.stderr)
-model_name = "allenai/unifiedqa-t5-large" # you can specify the model size here
+model_name = "allenai/unifiedqa-t5-3b" # you can specify the model size here
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = T5ForConditionalGeneration.from_pretrained(model_name)
 
